@@ -1,0 +1,36 @@
+{
+  "name": "be-rhp-nodejs-express-mongodb",
+  "version": "1.0.0",
+  "description": "team backend RHP",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon —inspect ./bin/www",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/NguyenChiQuang/be-rhp-nodejs-mongodb.git"
+  },
+  "keywords": [
+    "API",
+    "Javascript",
+    "Nodejs",
+    "Express",
+    "MongoDB",
+    "REST",
+    "Mongoose"
+  ],
+  "author": "quangnc",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NguyenChiQuang/be-rhp-nodejs-mongodb/issues"
+  },
+  "homepage": "https://github.com/NguyenChiQuang/be-rhp-nodejs-mongodb#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mongoose": "^5.3.13",
+    "morgan": "^1.9.1",
+    "nodemon": "^1.18.6"
+  }
+}
