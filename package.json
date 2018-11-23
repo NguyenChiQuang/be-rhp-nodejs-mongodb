@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon —inspect ./bin/www",
+    "start": "node ./bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -21,7 +22,7 @@
     "Mongoose"
   ],
   "author": "quangnc",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/NguyenChiQuang/be-rhp-nodejs-mongodb/issues"
   },
