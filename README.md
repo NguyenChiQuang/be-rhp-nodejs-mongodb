@@ -14,3 +14,16 @@ Hello wellcome to team backend RHP
  ### api demo
 
  Go to http://localhost:8888/api/demo 
+
+ ### Split job
+
+ Phạm Học (Tắc) : 
+    5. Tài khoản, Đăng nhập, Đăng ký (không cần bên thứ ba)
+ huynguyen96(Kiwi) : 
+    1. Hiển thị danh sách sản phẩm 
+    2. Đặt sản phẩm 
+ Huy (Đào): 
+    3. Chương trình khuyến mãi 
+    4. Tìm cửa hàng  
+Quang (Lê):
+    6. Lịch sử đặt sản phẩm   
