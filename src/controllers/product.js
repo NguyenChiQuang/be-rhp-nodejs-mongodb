@@ -59,7 +59,7 @@ module.exports = {
             }
 
             const product = new Product(body);
-            product.save((err, data) => {
+            await product.save((err, data) => {
                 if(err) {
                     throw new NotFound(err.message, 401);
                 }
@@ -114,7 +114,7 @@ module.exports = {
     */
     getOneProduct: async ( req, res ) => {
         try {
-            res.json(req.product);
+            res.send(req.product);
         } catch (error) {
             next(new NotFound(error, 404));
         }
@@ -157,12 +157,22 @@ module.exports = {
                 "status": product.status,
                 "userId": product.userId
             })
-            productNew.save((err, data) => {
+            await productNew.save((err, data) => {
                 if(err) {
                     throw new NotFound(err, 400);
                 }
                 res.send(data)
             })
+        } catch (error) {
+            next( new NotFound(error, 400));
+        }
+    },
+
+    searchProduct: async (req, res, next) => {
+        try {
+            const { name } = req.body;
+            const products = await Product.find({ nameProduct: `/.*${name}*./`})
+            return res.send(products);
         } catch (error) {
             next( new NotFound(error, 400));
         }
