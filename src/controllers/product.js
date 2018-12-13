@@ -98,7 +98,7 @@ module.exports = {
     */
     updateProduct: async ( req, res ) => {
         const product = req.product;
-        Blog.update({ _id: product.id }, req.body, {
+        Product.update({ _id: product.id }, req.body, {
             upsert: false, multi: false 
         }, (err, success) => {
             if (err) 
