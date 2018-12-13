@@ -3,12 +3,24 @@ const NotFound = require('../helpers/not-found');
 const Order = require('../models/order')
 
 module.exports = {
+    /**
+     * get all order
+     * @param req
+     * @param res
+     * @param next
+    */
     getAllOrders: ( req, res, next ) => {
         Order.find({})
             .then( data => res.status(200).json(data) )
             .catch(err => next(err))
     },
 
+    /**
+     * create order
+     * @param req
+     * @param res
+     * @param next
+    */
     createOrder: async ( req, res, next ) => {
         try {
             const body = req.body;
@@ -41,6 +53,12 @@ module.exports = {
         }
     },
 
+    /**
+     * delete order
+     * @param req
+     * @param res
+     * @param next
+    */
     deleteOrder: async ( req, res, next ) => {
         try{
             const order = req.order;
@@ -55,6 +73,12 @@ module.exports = {
         }
     },
 
+    /**
+     * update order
+     * @param req
+     * @param res
+     * @param next
+    */
     updateOrder: async ( req, res ) => {
         const order = req.order;
         Blog.update({ _id: order.id }, req.body, {
@@ -66,6 +90,12 @@ module.exports = {
         });
     },
 
+    /**
+     * get one order
+     * @param req
+     * @param res
+     * @param next
+    */
     getOneOrder: async ( req, res ) => {
         try {
             res.json(req.order);
@@ -74,6 +104,12 @@ module.exports = {
         }
     },
 
+    /**
+     * get order by id
+     * @param req
+     * @param res
+     * @param next
+    */
     getByIdOrder: async ( req, res, next, id ) => {
         try {
             const order = await Order.findById(id);

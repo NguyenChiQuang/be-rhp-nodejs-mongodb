@@ -31,12 +31,24 @@ const validate = ( data ) => {
 }
 
 module.exports = {
+    /**
+     * get all product
+     * @param req
+     * @param res
+     * @param next
+    */
     getAllProducts: ( req, res, next ) => {
         Product.find({})
             .then( data => res.status(200).json(data) )
             .catch(err => next(err))
     },
 
+    /**
+     * reset password
+     * @param req
+     * @param res
+     * @param next
+    */
     createProduct: async ( req, res, next ) => {
         try {
             const body = req.body;
@@ -58,6 +70,12 @@ module.exports = {
         }
     },
 
+    /**
+     * delete product
+     * @param req
+     * @param res
+     * @param next
+    */
     deleteProduct: async ( req, res, next ) => {
         try{
             const product = req.product;
@@ -72,6 +90,12 @@ module.exports = {
         }
     },
 
+    /**
+     * update product
+     * @param req
+     * @param res
+     * @param next
+    */
     updateProduct: async ( req, res ) => {
         const product = req.product;
         Blog.update({ _id: product.id }, req.body, {
@@ -83,6 +107,11 @@ module.exports = {
         });
     },
 
+    /**
+     * get one product
+     * @param req
+     * @param res
+    */
     getOneProduct: async ( req, res ) => {
         try {
             res.json(req.product);
@@ -91,6 +120,12 @@ module.exports = {
         }
     },
 
+    /**
+     * get product by id
+     * @param req
+     * @param res
+     * @param next
+    */
     getByIdProduct: async ( req, res, next, id ) => {
         try {
             const product = await Product.findById(id);
@@ -105,6 +140,11 @@ module.exports = {
         }
     },
 
+    /**
+     * duplicate product by id
+     * @param req
+     * @param res
+    */
     duplicateById: async ( req, res ) => {
         try {
             const product = req.product;
