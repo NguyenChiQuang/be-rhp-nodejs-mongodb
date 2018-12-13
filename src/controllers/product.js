@@ -1,3 +1,5 @@
+
+const NotFound = require('../helpers/not-found');
 const Product = require('../models/product')
 const validate = ( data ) => {
     let err = {};
@@ -28,168 +30,101 @@ const validate = ( data ) => {
     };
 }
 
-const validateDuplicateById = ( data ) => {
-    let err = {};
-    let status = true;
-    
-    if(!data || !data.id ) {
-        err.userId = 'Thieu id product con ak';
-        status = false;
-    }
-    return {
-        err,
-        status
-    };
-}
-
 module.exports = {
-    index: ( req, res, next ) => {
+    getAllProducts: ( req, res, next ) => {
         Product.find({})
             .then( data => res.status(200).json(data) )
             .catch(err => next(err))
     },
 
-    create: async ( req, res, next ) => {
+    createProduct: async ( req, res, next ) => {
         try {
             const body = req.body;
             const validation = validate(body);
 
             if(!validation.status) {
-                res.json({
-                    code: 2,
-                    status: 401,
-                    message: validation.err,
-                })
+                throw new NotFound(validation.err, 400);
             }
 
             const product = new Product(body);
             product.save((err, data) => {
                 if(err) {
-                    res.json({
-                        code: 2,
-                        status: 401,
-                        message: err.message,
-                    })
+                    throw new NotFound(err.message, 401);
                 }
-
-                res.json({
-                    code: 1,
-                    status: 201,
-                    message: 'Bạn đã tạo thành công rồi đó, vui không?',
-                })
-                
+                res.send(data);
             })
         } catch (error) {
-            res.json({
-                code: 2,
-                status: 401,
-                message: 'Đéo tạo được đâu, đừng cố làm gì',
-            })
+            next(new NotFound(error, 404));
         }
     },
 
-    delete: async ( req, res, next ) => {
-        const body = req.body;
+    deleteProduct: async ( req, res, next ) => {
         try{
-            const productById = await Product.findByIdAndRemove(body.id);
+            const product = req.product;
+            const productById = await Product.findByIdAndRemove(product.id);
             if(productById) {
-                res.json({
-                    code: 1,
-                    status: 200,
-                    message: 'Xóa product thành công',
-                })
+                res.end();
             } else {
-                res.json({
-                    code: 2,
-                    status: 400,
-                    message: 'Xóa product thất bại'
-                })
+                next(new NotFound('Xóa product thất bại', 400));
             }
         } catch (err){
-            res.json({
-                code:2,
-                status: 400,
-                message: err.message
-            });
+            next(new NotFound(err, 400));
         }
     },
 
-    getProductById: async ( req, res ) => {
+    updateProduct: async ( req, res ) => {
+        const product = req.product;
+        Blog.update({ _id: product.id }, req.body, {
+            upsert: false, multi: false 
+        }, (err, success) => {
+            if (err) 
+                return res.send(err);
+            return res.send(success);
+        });
+    },
+
+    getOneProduct: async ( req, res ) => {
         try {
-            const id = req.params.id;
+            res.json(req.product);
+        } catch (error) {
+            next(new NotFound(error, 404));
+        }
+    },
+
+    getByIdProduct: async ( req, res, next, id ) => {
+        try {
             const product = await Product.findById(id);
             if(product) {
-                res.json({
-                    code: 1,
-                    status: 200,
-                    data: product
-                });
+                req.product = product;
+                next();
             } else {
-                res.json({
-                    code: 2,
-                    status: 400,
-                    message: 'Làm lờ có sản phẩm mà tìm'
-                });
+                next(new NotFound('User not exist!', 404));
             }
         } catch (error) {
-            res.json({
-                code: 2,
-                status: 400,
-                message: error.message
-            });
+            next(new NotFound(error, 404));
         }
     },
 
     duplicateById: async ( req, res ) => {
         try {
-            const body = req.body;
-            const validation = validateDuplicateById(body);
-            if(!validation.status) {
-                res.json({
-                    code: 2,
-                    status: 401,
-                    message: validation.err,
-                });
-            }
-            const product  = await Product.findById(body.id)
-            if(!product) {
-                res.json({
-                    code: 2,
-                    status: 400,
-                    message: "Có tồn tại sản phẩm đâu mà mua"
-                })
-            }
+            const product = req.product;
             const productNew = new Product({
                 "nameProduct": product.nameProduct,
                 "descProduct": product.descProduct,
                 "priceProduct": product.priceProduct,
                 "size": product.size,
-                "qty": 1,
+                "qty": product.qty,
                 "status": product.status,
                 "userId": product.userId
             })
             productNew.save((err, data) => {
                 if(err) {
-                    res.json({
-                        code: 2,
-                        status: 401,
-                        message: err.message,
-                    })
+                    throw new NotFound(err, 400);
                 }
-
-                res.json({
-                    code: 1,
-                    status: 201,
-                    message: 'Bạn đã tạo thành công rồi đó, vui không?',
-                })
-                
+                res.send(data)
             })
         } catch (error) {
-            res.json({
-                code: 2,
-                status: 400,
-                message: error.message
-            });
+            next( new NotFound(error, 400));
         }
     }
 

@@ -2,20 +2,20 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 //initialize table structure
-const productSchema = new Schema({
+const orderSchema = new Schema({
     userId: {
         type: String,
         required:true
     },
-    nameProduct: {
+    nameCustomer: {
         type: String,
         required:true
     },
-    descProduct: {
+    emailCustomer: {
         type: String,
         required:true
     },
-    priceProduct: {
+    provinceCustomer: {
         type: Number,
         default: 0,
         required:true
@@ -23,17 +23,8 @@ const productSchema = new Schema({
     qty: {
         type: Number,
         required: true
-    },
-    size: {
-        type: String,
-        required: true
-    },
-    status: {
-        type: Number,
-        default: 0,
-        required:true
-    },
+    }
 });
 
-const Product = mongoose.model('product', productSchema);
-module.exports =  Product;
+const Oder = mongoose.model('oder', orderSchema);
+module.exports =  Oder;
