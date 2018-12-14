@@ -1,14 +1,9 @@
 const express = require('express')
 
-// require file for is me init in project
-const demo = require('./api/demo');
-const product = require('./api/product');
+const user = require('./user');
+
 const router = express.Router()
 
-// route
-router.use('/demo', demo);
-
-//product
-router.use('/product', product)
+router.use('/auth', user);
 
 module.exports = router;

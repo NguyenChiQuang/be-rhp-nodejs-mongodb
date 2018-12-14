@@ -2,13 +2,13 @@
 const http = require('http');
 
 const app = require('../index');
-const config = require('../config')
+const config = require('../config');
 
-//define Port
+//Define Port
 const port = config.PORT;
 
-//create a server
-const server = http.createServer(app);
+//create a server 
+const server = http.createServer(app)
 
-// listen a port
-server.listen(port)
+//listen a port
+server.listen(port);
