@@ -2,28 +2,21 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 //initialize table structure
-const productSchema = new Schema({
-    idProduct: {
+const categorySchema = new Schema({
+    nameCategory: {
+        type: String,
+        required: true
+    },
+    descCategory: {
+        type: String,
+        required: true
+    },
+    idParent: {
         type: Number,
-    },
-    nameProduct: {
-        type: String,
         required: true
     },
-    descProduct: {
-        type: String,
-        required: true
-    },
-    imageProduct: {
-        type: String,
-        required: true
-    },
-    libraryImage: {
+    products: {
         type: [Object],
-        required: true
-    },
-    categoryProduct: {
-        type: Object,
         required: true
     },
     other: { type: String },
@@ -31,5 +24,5 @@ const productSchema = new Schema({
     other3: { type: String },
 });
 
-const Product = mongoose.model('product', productSchema);
-module.exports = Product;
+const Oder = mongoose.model('category', categorySchema);
+module.exports = Oder;
