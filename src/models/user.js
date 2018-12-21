@@ -2,13 +2,16 @@ const mongoose = require('mongoose');
 const bcrypt   = require('bcrypt');
 
 const UserSchema = new mongoose.Schema({
-  firstName: { type: String },
-  lastName: { type: String },
+  fullName: { type: String },
+  userName: { type: String },
   email: { type: String, unique: true },
-  password: { type: String },
-  role: { type: String, default: 'user' },
-  created: { type: Date },
-  updated: { type: Date },
+  address: { type: [Object] },
+  phone: { type: [Object] },
+  setting: { type: Object },
+  type: { type: String },
+  other:{ type:String },
+  other2:{ type:String },
+  other3:{ type:String },
   
   //infor user login on facebook
   facebook: {
